@@ -23,7 +23,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-                  <Link href="/quote">Get Quotesss</Link>
+                  <Link href="/quote">Get Quote</Link>
                 </Button>
                 <Button
                   size="lg"
