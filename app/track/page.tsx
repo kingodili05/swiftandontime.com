@@ -144,7 +144,7 @@ export default function TrackPage() {
               location: "Luxor International Aiport",
               time: "2025-08-11 08:30 PM",
               completed: false,
-              note: "Package currently on Hold at Sorting Facility, awaiting Insurance fee of $3,680.",
+              note: "Package currently on Hold at Sorting Facility, awaiting Insurance fee of $3,920.",
               current: true,
             },
             // {
