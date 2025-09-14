@@ -149,10 +149,10 @@ export default function TrackPage() {
             },
 
 
-            SOTest047648845: {
+            SOT0476443699: {
           status: "pending",
           packageInfo: {
-            trackingNumber: "SOTest047648845",
+            trackingNumber: "SOT0476443699",
             service: "International Express",
             weight: "70.87 kg",
             dimensions: "30x15x10 cm",
