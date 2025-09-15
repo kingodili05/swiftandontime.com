@@ -118,7 +118,7 @@ export default function TrackPage() {
           ],
         },
         SOT047648845: {
-          status: "In transit",
+          status: "in-transit",
           packageInfo: {
             trackingNumber: "SOT047648845",
             service: "International Express",
