@@ -149,38 +149,7 @@ export default function TrackPage() {
             },
 
 
-            SOT0476443699: {
-          status: "pending",
-          packageInfo: {
-            trackingNumber: "SOT0476443699",
-            service: "International Express",
-            weight: "70.87 kg",
-            dimensions: "30x15x10 cm",
-          },
-          sender: {
-            name: "Ralphson Lucas",
-            address: "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
-          },
-          recipient: {
-            name: "Emma Mocasque",
-            address: "290 W Middle Verde Rd, Camp Verde, AZ 86322",
-            contact: "9282955890"
-          },
-          timeline: [
-            {
-              status: "Package picked up",
-              location: "Cairo, Egypt",
-              time: "2025-08-11 11:00 AM",
-              completed: true,
-            },
-            {
-              status: "Sorting Facility",
-              location: "Luxor International Aiport",
-              time: "2025-08-11 08:30 PM",
-              completed: false,
-              note: "Package currently on Hold at Sorting Facility, awaiting Insurance fee of $3,920.",
-              current: true,
-            },
+            
 
             
             // {
