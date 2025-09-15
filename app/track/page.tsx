@@ -65,6 +65,8 @@ export default function TrackPage() {
             },
           ],
         },
+
+        
         SOT987654321: {
           status: "in-transit",
           packageInfo: {
@@ -147,34 +149,65 @@ export default function TrackPage() {
               note: "Package currently on Hold at Sorting Facility, awaiting Insurance fee of $3,920.",
               current: true,
             },
-
+  ],
+},
 
             
+          SOT047648846: {
+  status: "in-transit",
+  packageInfo: {
+    trackingNumber: "SOT047648846",
+    service: "International Express",
+    weight: "70.87 kg",
+    dimensions: "30x15x10 cm",
+  },
+  sender: {
+    name: "Ralphson Lucas",
+    address: "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
+  },
+  recipient: {
+    name: "Emma Mocasque",
+    address: "290 W Middle Verde Rd, Camp Verde, AZ 86322",
+    contact: "9282955890"
+  },
+  timeline: [
+    {
+      status: "Package picked up",
+      location: "Cairo, Egypt",
+      time: "2025-08-11 11:00 AM",
+      completed: true,
+    },
+    {
+      status: "Sorting Facility",
+      location: "Luxor International Airport",
+      time: "2025-08-11 08:30 PM",
+      completed: true,
+    },
+    {
+      status: "In transit",
+      location: "JFK Airport, New York",
+      time: "2025-08-12 06:45 AM",
+      completed: true,
+    },
+    {
+      status: "Customs clearance",
+      location: "Los Angeles, CA",
+      time: "2025-08-13 02:15 PM",
+      completed: false,
+      current: true,
+    },
+    {
+      status: "Out for delivery",
+      location: "Camp Verde, AZ",
+      time: "Estimated: 2025-08-14 10:00 AM",
+      completed: false,
+    },
+  ],
+}
 
-            
-            // {
-            //   status: "In transit",
-            //   location: "JFK Airport, New York",
-            //   time: "2024-01-15 06:45 AM",
-            //   completed: true,
-            // },
-            // {
-            //   status: "Customs clearance",
-            //   location: "Los Angeles, CA",
-            //   time: "2024-01-15 02:15 PM",
-            //   completed: false,
-            //   current: true,
-            // },
-            // {
-            //   status: "Out for delivery",
-            //   location: "Los Angeles, CA",
-            //   time: "Estimated: 2024-01-16 10:00 AM",
-            //   completed: false,
-            // },
-          ],
-        },
-      }
 
+
+      
       setTrackingResult(mockData[trackingNumber as keyof typeof mockData] || null)
       setIsLoading(false)
     }, 1500)
