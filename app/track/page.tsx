@@ -126,40 +126,70 @@ export default function TrackPage() {
         },
 
         SOT047648845: {
-          status: "in-transit",
-          packageInfo: {
-            trackingNumber: "SOT047648845",
-            service: "International Express",
-            weight: "80.87 kg",
-            dimensions: "30x15x10 cm",
-          },
-          sender: {
-            name: "Ralphson Lucas",
-            address:
-              "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
-          },
-          recipient: {
-            name: "Emma Mocasque",
-            address: "290 W Middle Verde Rd, Camp Verde, AZ 86322",
-            contact: "9282955890",
-          },
-          timeline: [
-            {
-              status: "Package picked up",
-              location: "Cairo, Egypt",
-              time: "2025-08-11 11:00 AM",
-              completed: true,
-            },
-            {
-              status: "Sorting Facility",
-              location: "Luxor International Aiport",
-              time: "2025-08-11 08:30 PM",
-              completed: false,
-              note: "Package Currently On Transit",
-              current: true,
-            },
-          ],
-        },
+  status: "in-transit",
+  packageInfo: {
+    trackingNumber: "SOT047648845",
+    service: "International Express",
+    weight: "80.87 kg",
+    dimensions: "30x15x10 cm",
+  },
+  sender: {
+    name: "Ralphson Lucas",
+    address: "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
+  },
+  recipient: {
+    name: "Emma Mocasque",
+    address: "290 W Middle Verde Rd, Camp Verde, AZ 86322",
+    contact: "9282955890",
+  },
+  timeline: [
+    {
+      status: "Package picked up",
+      location: "Cairo, Egypt",
+      time: "2025-08-11 11:00 AM",
+      completed: true,
+    },
+    {
+      status: "Sorting Facility",
+      location: "Luxor International Airport",
+      time: "2025-08-11 08:30 PM",
+      completed: true,
+      note: "Processed and forwarded for export",
+    },
+    {
+      status: "Departed origin country",
+      location: "Luxor International Airport",
+      time: "2025-09-22 03:45 AM",
+      completed: true,
+    // },
+    // {
+    //   status: "Arrived at transit hub",
+    //   location: "Frankfurt, Germany",
+    //   time: "2025-08-12 12:20 PM",
+    //   completed: true,
+    // },
+    // {
+    //   status: "In transit",
+    //   location: "JFK Airport, New York, USA",
+    //   time: "2025-08-13 06:40 AM",
+    //   completed: true,
+    // },
+    // {
+    //   status: "Customs clearance",
+    //   location: "Phoenix, AZ, USA",
+    //   time: "2025-08-14 10:15 AM",
+    //   completed: false,
+    //   current: true,
+    //   note: "Awaiting customs release",
+    // },
+    // {
+    //   status: "Out for delivery",
+    //   location: "Camp Verde, AZ",
+    //   time: "Estimated: 2025-08-15 09:00 AM",
+    //   completed: false,
+    },
+  ],
+},
       }; // <-- CLOSE mockData object here
 
       // Set the result using the trackingNumber key (or null if not found)
