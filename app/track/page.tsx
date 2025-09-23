@@ -1,21 +1,29 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Package, MapPin, Clock, CheckCircle, Truck, Search, AlertCircle } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Package,
+  MapPin,
+  Clock,
+  CheckCircle,
+  Truck,
+  Search,
+  AlertCircle,
+} from "lucide-react";
 
 export default function TrackPage() {
-  const [trackingNumber, setTrackingNumber] = useState("")
-  const [trackingResult, setTrackingResult] = useState<any>(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [trackingResult, setTrackingResult] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTrack = async () => {
-    if (!trackingNumber.trim()) return
+    if (!trackingNumber.trim()) return;
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     // Simulate API call
     setTimeout(() => {
@@ -66,7 +74,6 @@ export default function TrackPage() {
           ],
         },
 
-        
         SOT987654321: {
           status: "in-transit",
           packageInfo: {
@@ -117,6 +124,7 @@ export default function TrackPage() {
             },
           ],
         },
+
         SOT047648845: {
           status: "in-transit",
           packageInfo: {
@@ -127,12 +135,13 @@ export default function TrackPage() {
           },
           sender: {
             name: "Ralphson Lucas",
-            address: "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
+            address:
+              "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
           },
           recipient: {
             name: "Emma Mocasque",
             address: "290 W Middle Verde Rd, Camp Verde, AZ 86322",
-            contact: "9282955890"
+            contact: "9282955890",
           },
           timeline: [
             {
@@ -149,47 +158,43 @@ export default function TrackPage() {
               note: "Package Currently On Transit",
               current: true,
             },
-  ],
-},
+          ],
+        },
+      }; // <-- CLOSE mockData object here
 
-            
-         
-
-
-
-      
-      setTrackingResult(mockData[trackingNumber as keyof typeof mockData] || null)
-      setIsLoading(false)
-    }, 1500)
-  }
+      // Set the result using the trackingNumber key (or null if not found)
+      setTrackingResult(mockData[trackingNumber as keyof typeof mockData] || null);
+      setIsLoading(false);
+    }, 1500);
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "delivered":
-        return "bg-green-500"
+        return "bg-green-500";
       case "On Hold":
-        return "bg-red-500"    
+        return "bg-red-500";
       case "in-transit":
-        return "bg-blue-500"
+        return "bg-blue-500";
       case "pending":
-        return "bg-yellow-500"
+        return "bg-yellow-500";
       default:
-        return "bg-gray-500"
+        return "bg-gray-500";
     }
-  }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "delivered":
-        return <CheckCircle className="h-5 w-5" />
+        return <CheckCircle className="h-5 w-5" />;
       case "in-transit":
-        return <Truck className="h-5 w-5" />
+        return <Truck className="h-5 w-5" />;
       case "pending":
-        return <Clock className="h-5 w-5" />
+        return <Clock className="h-5 w-5" />;
       default:
-        return <Package className="h-5 w-5" />
+        return <Package className="h-5 w-5" />;
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -205,7 +210,8 @@ export default function TrackPage() {
               <span className="text-orange-400"> Package</span>
             </h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-              Enter your tracking number below to get real-time updates on your package location and delivery status.
+              Enter your tracking number below to get real-time updates on your package location and delivery
+              status.
             </p>
 
             {/* Tracking Form */}
@@ -216,7 +222,7 @@ export default function TrackPage() {
                   value={trackingNumber}
                   onChange={(e) => setTrackingNumber(e.target.value)}
                   className="bg-white text-black text-lg h-12"
-                  onKeyPress={(e) => e.key === "Enter" && handleTrack()}
+                  onKeyDown={(e: React.KeyboardEvent) => e.key === "Enter" && handleTrack()}
                 />
                 <Button
                   size="lg"
@@ -225,7 +231,7 @@ export default function TrackPage() {
                   disabled={isLoading}
                 >
                   {isLoading ? (
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
                   ) : (
                     <>
                       <Search className="h-5 w-5 mr-2" />
@@ -234,7 +240,6 @@ export default function TrackPage() {
                   )}
                 </Button>
               </div>
-              {/* <p className="text-blue-100 text-sm mt-4">Try sample tracking numbers: SOT123456789 or SOT987654321</p> */}
             </div>
           </div>
         </div>
@@ -251,18 +256,18 @@ export default function TrackPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <CardTitle className="text-2xl mb-2">
-                        Tracking #{trackingResult.packageInfo.trackingNumber}
+                        Tracking #{trackingResult?.packageInfo?.trackingNumber}
                       </CardTitle>
-                      <p className="text-gray-600">{trackingResult.packageInfo.service}</p>
+                      <p className="text-gray-600">{trackingResult?.packageInfo?.service}</p>
                     </div>
-                    <Badge className={`${getStatusColor(trackingResult.status)} text-white px-4 py-2`}>
+                    <Badge className={`${getStatusColor(trackingResult?.status)} text-white px-4 py-2`}>
                       <div className="flex items-center gap-2">
-                        {getStatusIcon(trackingResult.status)}
-                        {trackingResult.status === "delivered"
+                        {getStatusIcon(trackingResult?.status)}
+                        {trackingResult?.status === "delivered"
                           ? "Delivered"
-                          : trackingResult.status === "in-transit"
-                            ? "In Transit"
-                            : "Pending"}
+                          : trackingResult?.status === "in-transit"
+                          ? "In Transit"
+                          : "Pending"}
                       </div>
                     </Badge>
                   </div>
@@ -271,18 +276,18 @@ export default function TrackPage() {
                   <div className="grid md:grid-cols-3 gap-6">
                     <div>
                       <h4 className="font-semibold mb-2">From</h4>
-                      <p className="text-sm text-gray-600">{trackingResult.sender.name}</p>
-                      <p className="text-sm text-gray-600">{trackingResult.sender.address}</p>
+                      <p className="text-sm text-gray-600">{trackingResult?.sender?.name}</p>
+                      <p className="text-sm text-gray-600">{trackingResult?.sender?.address}</p>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">To</h4>
-                      <p className="text-sm text-gray-600">{trackingResult.recipient.name}</p>
-                      <p className="text-sm text-gray-600">{trackingResult.recipient.address}</p>
+                      <p className="text-sm text-gray-600">{trackingResult?.recipient?.name}</p>
+                      <p className="text-sm text-gray-600">{trackingResult?.recipient?.address}</p>
                     </div>
                     <div>
                       <h4 className="font-semibold mb-2">Package Details</h4>
-                      <p className="text-sm text-gray-600">Weight: {trackingResult.packageInfo.weight}</p>
-                      <p className="text-sm text-gray-600">Dimensions: {trackingResult.packageInfo.dimensions}</p>
+                      <p className="text-sm text-gray-600">Weight: {trackingResult?.packageInfo?.weight}</p>
+                      <p className="text-sm text-gray-600">Dimensions: {trackingResult?.packageInfo?.dimensions}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -295,7 +300,7 @@ export default function TrackPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-6">
-                    {trackingResult.timeline.map((event: any, index: number) => (
+                    {trackingResult?.timeline?.map((event: any, index: number) => (
                       <div key={index} className="flex gap-4">
                         <div className="flex flex-col items-center">
                           <div
@@ -303,8 +308,8 @@ export default function TrackPage() {
                               event.completed
                                 ? "bg-green-500 text-white"
                                 : event.current
-                                  ? "bg-blue-500 text-white"
-                                  : "bg-gray-300 text-gray-600"
+                                ? "bg-blue-500 text-white"
+                                : "bg-gray-300 text-gray-600"
                             }`}
                           >
                             {event.completed ? (
@@ -312,13 +317,13 @@ export default function TrackPage() {
                             ) : event.current ? (
                               <Clock className="h-5 w-5" />
                             ) : (
-                              <div className="w-3 h-3 rounded-full bg-current"></div>
+                              <div className="w-3 h-3 rounded-full bg-current" />
                             )}
                           </div>
-                          {index < trackingResult.timeline.length - 1 && (
+                          {index < (trackingResult?.timeline?.length || 0) - 1 && (
                             <div
                               className={`w-0.5 h-12 mt-2 ${event.completed ? "bg-green-500" : "bg-gray-300"}`}
-                            ></div>
+                            />
                           )}
                         </div>
                         <div className="flex-1 pb-8">
@@ -338,9 +343,7 @@ export default function TrackPage() {
                             <Clock className="h-4 w-4" />
                             <span>{event.time}</span>
                           </div>
-                          {event.note && (
-                            <p className="text-sm text-gray-600 mt-2 bg-gray-50 p-2 rounded">{event.note}</p>
-                          )}
+                          {event.note && <p className="text-sm text-gray-600 mt-2 bg-gray-50 p-2 rounded">{event.note}</p>}
                         </div>
                       </div>
                     ))}
@@ -362,8 +365,8 @@ export default function TrackPage() {
                   <AlertCircle className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Tracking Number Not Found</h3>
                   <p className="text-gray-600 mb-6">
-                    We couldn't find any information for tracking number "{trackingNumber}". Please check the number and
-                    try again.
+                    We couldn't find any information for tracking number "{trackingNumber}". Please check the number
+                    and try again.
                   </p>
                   <div className="space-y-2 text-sm text-gray-600">
                     <p>• Make sure you've entered the complete tracking number</p>
@@ -443,5 +446,5 @@ export default function TrackPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
