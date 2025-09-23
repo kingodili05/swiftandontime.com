@@ -130,7 +130,7 @@ export default function TrackPage() {
   packageInfo: {
     trackingNumber: "SOT047648845",
     service: "International Express",
-    weight: "80.87 kg",
+    weight: "70.87 kg",
     dimensions: "30x15x10 cm",
   },
   sender: {
