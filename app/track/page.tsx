@@ -173,7 +173,7 @@ export default function TrackPage() {
       location: "JFK Airport, New York, USA",
       time: "2025-09-30 06:40 AM",
       completed: false,
-      note: "Package currently with the United States Customs Department, Awaiting customs Clearance Fee of $16,200 release",
+      note: "Package currently with the United States Customs Department, Awaiting customs Clearance Fee of $11,300 release",
     // },
     // {
     //   status: "Customs clearance",
