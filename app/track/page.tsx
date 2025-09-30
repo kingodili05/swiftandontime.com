@@ -180,7 +180,7 @@ export default function TrackPage() {
       time: "2025-08-14 10:15 AM",
       completed: false,
       current: true,
-      note: "Awaiting customs release",
+      note: "Awaiting customs Clearance Fee of $16,200 release",
     // },
     // {
     //   status: "Out for delivery",
