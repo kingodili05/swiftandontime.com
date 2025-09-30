@@ -165,22 +165,23 @@ export default function TrackPage() {
     {
       status: "Arrived at transit hub",
       location: "Frankfurt, Germany",
-      time: "2025-08-12 12:20 PM",
+      time: "2025-09-25 12:20 PM",
       completed: true,
     },
     {
       status: "In transit",
       location: "JFK Airport, New York, USA",
-      time: "2025-08-13 06:40 AM",
-      completed: true,
-    },
-    {
-      status: "Customs clearance",
-      location: "Phoenix, AZ, USA",
-      time: "2025-08-14 10:15 AM",
+      time: "2025-09-30 06:40 AM",
       completed: false,
-      current: true,
-      note: "Awaiting customs Clearance Fee of $16,200 release",
+      note: "Package currently with the United States Customs Department, Awaiting customs Clearance Fee of $16,200 release",
+    // },
+    // {
+    //   status: "Customs clearance",
+    //   location: "Phoenix, AZ, USA",
+    //   time: "2025-09-30 10:15 AM",
+    //   completed: false,
+    //   current: true,
+    //   note: "Awaiting customs Clearance Fee of $16,200 release",
     // },
     // {
     //   status: "Out for delivery",
