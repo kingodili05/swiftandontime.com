@@ -169,7 +169,7 @@ export default function TrackPage() {
       completed: true,
     },
     {
-      status: "In transit",
+      status: "Custom Clearance",
       location: "JFK Airport, New York, USA",
       time: "2025-09-30 06:40 AM",
       completed: false,
