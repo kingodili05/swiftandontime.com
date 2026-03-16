@@ -101,8 +101,8 @@ export default function ContactPage() {
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Email Us</h3>
                 <p className="text-gray-600 mb-3">Send us your questions</p>
-                <a href="mailto:support@swiftandontime.com" className="text-blue-600 hover:underline font-medium">
-                  support@swiftandontime.com
+                <a href="mailto:support@swiftandontime.cc" className="text-blue-600 hover:underline font-medium">
+                  support@swiftandontime.cc
                 </a>
                 <p className="text-sm text-gray-500 mt-1">Response within 2 hours</p>
               </CardContent>
@@ -350,7 +350,7 @@ export default function ContactPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-sm">+1 (540) 594-6863</p>
-                        <p className="text-sm text-gray-600">support@swiftandontime.com</p>
+                        <p className="text-sm text-gray-600">support@swiftandontime.cc</p>
                       </div>
                     </div>
 
@@ -361,7 +361,7 @@ export default function ContactPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-sm">+1 (555) 123-4568</p>
-                        <p className="text-sm text-gray-600">sales@swiftandontime.com</p>
+                        <p className="text-sm text-gray-600">sales@swiftandontime.cc</p>
                       </div>
                     </div>
 
@@ -372,7 +372,7 @@ export default function ContactPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-sm">+1 (555) 123-4569</p>
-                        <p className="text-sm text-gray-600">business@swiftandontime.com</p>
+                        <p className="text-sm text-gray-600">business@swiftandontime.cc</p>
                       </div>
                     </div>
 
@@ -383,7 +383,7 @@ export default function ContactPage() {
                       </div>
                       <div className="text-right">
                         <p className="text-sm">+1 (555) 123-4570</p>
-                        <p className="text-sm text-gray-600">claims@swiftandontime.com</p>
+                        <p className="text-sm text-gray-600">claims@swiftandontime.cc</p>
                       </div>
                     </div>
                   </div>
@@ -467,7 +467,7 @@ export default function ContactPage() {
                 <h3 className="font-semibold mb-2">Priority Email</h3>
                 <p className="text-sm text-gray-600 mb-4">Fast response for business customers</p>
                 <Button className="bg-purple-600 hover:bg-purple-700" asChild>
-                  <a href="mailto:priority@swiftandontime.com">Send Email</a>
+                  <a href="mailto:priority@swiftandontime.cc">Send Email</a>
                 </Button>
               </CardContent>
             </Card>
@@ -518,7 +518,7 @@ export default function ContactPage() {
               <CardContent className="p-6">
                 <h3 className="font-semibold mb-2">How do I file a complaint?</h3>
                 <p className="text-gray-600 text-sm">
-                  Contact our claims department at +1 (555) 123-4570 or email claims@swiftandontime.com. We investigate
+                  Contact our claims department at +1 (555) 123-4570 or email claims@swiftandontime.cc. We investigate
                   all issues within 24 hours.
                 </p>
               </CardContent>
