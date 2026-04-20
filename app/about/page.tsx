@@ -1,313 +1,172 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Target, Eye, Heart } from "lucide-react"
+import { ArrowRight, Users, Award, Globe, Heart } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+
+function Reveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const el = ref.current; if (!el) return
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } }, { threshold: 0.1 })
+    obs.observe(el); return () => obs.disconnect()
+  }, [])
+  return (
+    <div ref={ref} className={className} style={{ opacity: visible ? 1 : 0, transform: visible ? "none" : "translateY(20px)", transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms` }}>
+      {children}
+    </div>
+  )
+}
+
+const TEAM = [
+  { name: "James Mitchell", role: "Founder & CEO", init: "JM", gradient: "from-blue-500 to-indigo-600" },
+  { name: "Priya Sharma", role: "Head of Operations", init: "PS", gradient: "from-violet-500 to-purple-600" },
+  { name: "Carlos Rivera", role: "Director of Logistics", init: "CR", gradient: "from-green-500 to-emerald-600" },
+  { name: "Aisha Thompson", role: "Customer Experience Lead", init: "AT", gradient: "from-pink-500 to-rose-500" },
+]
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-4 bg-blue-500 hover:bg-blue-400">About Swift & On Time</Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Your Trusted Courier Partner Since 2010</h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              We've built our reputation on reliability, speed, and exceptional customer service. Discover the story
-              behind our commitment to delivering excellence.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Company Story */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Story</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                Founded in 2010 by logistics veterans John Swift and Maria Ontime, Swift & On Time Courier Services
-                began with a simple mission: to provide reliable, fast, and secure package delivery services that
-                businesses and individuals could depend on.
-              </p>
-              <p className="text-lg text-gray-600 mb-6">
-                What started as a small local operation with just two delivery vans has grown into a nationwide network
-                serving thousands of customers across the country. Our success is built on the foundation of trust,
-                reliability, and an unwavering commitment to customer satisfaction.
-              </p>
-              <p className="text-lg text-gray-600">
-                Today, we're proud to be one of the leading courier services in the region, handling everything from
-                urgent same-day deliveries to complex international shipments.
-              </p>
-            </div>
-            <div className="relative">
-              <Image
-                src="https://i.imgur.com/D4VVRRC.jpeg?height=400&width=600&text=Modern+courier+company+headquarters+building+with+delivery+trucks"
-                alt="Swift & On Time company headquarters"
-                width={600}
-                height={400}
-                className="w-full h-96 object-cover rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission, Vision, Values */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Foundation</h2>
-            <p className="text-xl text-gray-600">The principles that guide everything we do</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Target className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <CardTitle>Our Mission</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  To provide fast, reliable, and secure courier services that exceed customer expectations while
-                  building lasting partnerships based on trust and excellence.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Eye className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <CardTitle>Our Vision</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  To be the leading courier service provider, known for innovation, reliability, and exceptional
-                  customer service in every market we serve.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <Heart className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <CardTitle>Our Values</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  Integrity, reliability, customer focus, innovation, and teamwork. These values drive our commitment to
-                  delivering excellence in every package we handle.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Leadership Team */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Leadership Team</h2>
-            <p className="text-xl text-gray-600">Meet the experienced professionals leading our company</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <Image
-                  src="https://i.imgur.com/HLxwq98.jpeg?height=128&width=128&text=Joseph+Freeman+CEO+Professional+Headshot"
-                  alt="Joseph Freeman, CEO"
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h3 className="text-xl font-semibold mb-2">Joseph Freeman</h3>
-                <p className="text-blue-600 font-medium mb-2">CEO & Co-Founder</p>
-                <p className="text-sm text-gray-600">
-                  20+ years in logistics and supply chain management. Former operations director at major shipping
-                  company.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <Image
-                  src="https://i.imgur.com/y3Z0OM6.jpeg?height=128&width=128&text=Maria+Ontime+COO+Professional+Headshot"
-                  alt="Evan Chapman, COO"
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h3 className="text-xl font-semibold mb-2">Evan Chapman</h3>
-                <p className="text-blue-600 font-medium mb-2">COO & Co-Founder</p>
-                <p className="text-sm text-gray-600">
-                  Expert in operations optimization and customer service excellence. MBA in Business Operations.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <Image
-                  src="https://i.imgur.com/xla1xJz.jpeg?height=128&width=128&text=David+Tech+CTO+Professional+Headshot"
-                  alt="Davon Dyer, CTO"
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h3 className="text-xl font-semibold mb-2">Davon Dyer</h3>
-                <p className="text-blue-600 font-medium mb-2">CTO</p>
-                <p className="text-sm text-gray-600">
-                  Technology innovator specializing in logistics software and tracking systems. 15+ years in tech.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <Image
-                  src="https://i.imgur.com/vKMNJrD.jpeg?height=128&width=128&text=Sarah+Operations+Head+Professional+Headshot"
-                  alt="Paige Watson, Head of Operations"
-                  width={128}
-                  height={128}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                />
-                <h3 className="text-xl font-semibold mb-2">Paige Watson</h3>
-                <p className="text-blue-600 font-medium mb-2">Head of Operations</p>
-                <p className="text-sm text-gray-600">
-                  Logistics expert ensuring smooth daily operations and maintaining our high service standards.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Company Stats */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Impact</h2>
-            <p className="text-xl text-blue-200">Numbers that reflect our commitment to excellence</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold mb-2">50,000+</div>
-              <div className="text-blue-200">Packages Delivered</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">2,500+</div>
-              <div className="text-blue-200">Happy Customers</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">99.8%</div>
-              <div className="text-blue-200">On-Time Delivery Rate</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">15+</div>
-              <div className="text-blue-200">Years of Excellence</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Swift & On Time?</h2>
-            <p className="text-xl text-gray-600">The advantages that set us apart from the competition</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="flex items-start space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Proven Track Record</h3>
-                <p className="text-gray-600">
-                  Over 15 years of consistent, reliable service with thousands of satisfied customers.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Advanced Technology</h3>
-                <p className="text-gray-600">
-                  Real-time tracking, automated notifications, and digital proof of delivery.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Flexible Solutions</h3>
-                <p className="text-gray-600">
-                  Customized delivery options to meet your specific business needs and requirements.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Competitive Pricing</h3>
-                <p className="text-gray-600">
-                  Fair, transparent pricing with no hidden fees. Get the best value for your shipping needs.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">24/7 Support</h3>
-                <p className="text-gray-600">Round-the-clock customer support to assist you whenever you need help.</p>
-              </div>
-            </div>
-
-            <div className="flex items-start space-x-4">
-              <CheckCircle className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-xl font-semibold mb-2">Nationwide Network</h3>
-                <p className="text-gray-600">
-                  Extensive coverage across the country with local expertise in every market.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gray-900 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Experience the Difference?</h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join thousands of satisfied customers who trust Swift & On Time for their courier needs.
+      {/* Hero */}
+      <section className="relative bg-gray-950 py-28 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <div className="absolute top-1/2 left-1/4 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl" />
+        <div className="relative container mx-auto px-4 text-center">
+          <Badge className="mb-4 bg-white/5 text-blue-400 border-white/10 animate-fade-in">Our Story</Badge>
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-6 animate-fade-in-up">
+            Built on trust,<br /><span className="gradient-text">driven by speed</span>
+          </h1>
+          <p className="text-gray-400 text-xl max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+            Since 2010, we've been redefining what reliable courier service looks like — one delivery at a time.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-              <Link href="/quote">Get Started Today</Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-gray-900 bg-transparent"
-            >
-              <Link href="/contact">Contact Our Team</Link>
-            </Button>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-16 items-center max-w-5xl mx-auto">
+            <Reveal>
+              <Badge className="mb-4 bg-blue-50 text-blue-600 border-blue-100">Who We Are</Badge>
+              <h2 className="text-4xl font-black text-gray-900 mb-6">
+                More than a courier —<br /><span className="gradient-text-dark">a promise kept</span>
+              </h2>
+              <div className="space-y-4 text-gray-600 leading-relaxed">
+                <p>Swift & On Time was founded with a single mission: to deliver packages the way people actually need them delivered — fast, safe, and with complete transparency.</p>
+                <p>What started as a small local operation in New York City has grown into a nationwide network serving thousands of businesses and individuals every day.</p>
+                <p>We believe that every package carries something important — a business deal, a gift, a medical necessity. That's why we treat every shipment like it matters, because it does.</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                {[
+                  { value: "2010", label: "Founded" },
+                  { value: "50K+", label: "Packages delivered" },
+                  { value: "200+", label: "Cities covered" },
+                  { value: "99.8%", label: "On-time rate" },
+                ].map((s) => (
+                  <div key={s.label} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p className="text-2xl font-black text-gray-900">{s.value}</p>
+                    <p className="text-sm text-gray-500 mt-0.5">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={150} className="space-y-4">
+              {[
+                { icon: <Users className="w-5 h-5" />, color: "bg-blue-50 text-blue-600", title: "People-first culture", desc: "Our team of 500+ professionals is trained to handle your shipments with care and professionalism." },
+                { icon: <Globe className="w-5 h-5" />, color: "bg-indigo-50 text-indigo-600", title: "Global reach", desc: "A network spanning 200+ countries, with local expertise in every region we serve." },
+                { icon: <Award className="w-5 h-5" />, color: "bg-yellow-50 text-yellow-600", title: "Award-winning service", desc: "Recognized as the #1 courier service in customer satisfaction for 3 consecutive years." },
+                { icon: <Heart className="w-5 h-5" />, color: "bg-pink-50 text-pink-600", title: "Community commitment", desc: "We give back to local communities through our courier apprenticeship program." },
+              ].map((item, i) => (
+                <div key={item.title} className="flex gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100 hover-lift">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${item.color}`}>
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm mb-1">{item.title}</p>
+                    <p className="text-sm text-gray-500">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className="py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <Reveal className="text-center mb-16">
+            <Badge className="mb-4 bg-blue-50 text-blue-600 border-blue-100">Our Values</Badge>
+            <h2 className="text-4xl font-black text-gray-900">What we stand for</h2>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {[
+              { emoji: "⚡", title: "Speed", desc: "We obsess over cutting every unnecessary minute from delivery time." },
+              { emoji: "🔒", title: "Reliability", desc: "A promise made is a promise kept. 99.8% on-time, every time." },
+              { emoji: "👁️", title: "Transparency", desc: "No surprises — real-time tracking and clear communication always." },
+              { emoji: "💚", title: "Sustainability", desc: "Committed to reducing our carbon footprint with every route we optimize." },
+              { emoji: "🤝", title: "Partnership", desc: "We grow when our customers grow. Your success is our mission." },
+              { emoji: "⭐", title: "Excellence", desc: "We don't settle for good enough — we push for exceptional." },
+            ].map((v, i) => (
+              <Reveal key={v.title} delay={i * 60}>
+                <div className="bg-white rounded-2xl p-6 border border-gray-100 hover-lift text-center">
+                  <div className="text-4xl mb-3">{v.emoji}</div>
+                  <h3 className="font-bold text-gray-900 mb-2">{v.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <Reveal className="text-center mb-16">
+            <Badge className="mb-4 bg-blue-50 text-blue-600 border-blue-100">Leadership</Badge>
+            <h2 className="text-4xl font-black text-gray-900">Meet the team</h2>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {TEAM.map((member, i) => (
+              <Reveal key={member.name} delay={i * 80}>
+                <div className="text-center group">
+                  <div className={`w-20 h-20 bg-gradient-to-br ${member.gradient} rounded-2xl flex items-center justify-center text-white font-black text-xl mx-auto mb-4 group-hover:scale-105 transition-transform shadow-lg`}>
+                    {member.init}
+                  </div>
+                  <p className="font-bold text-gray-900">{member.name}</p>
+                  <p className="text-sm text-gray-500">{member.role}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 bg-gradient-to-br from-blue-700 to-indigo-900 relative overflow-hidden">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+        <div className="container mx-auto px-4 text-center relative">
+          <Reveal>
+            <h2 className="text-4xl font-black text-white mb-4">Ready to ship with us?</h2>
+            <p className="text-blue-100 text-lg mb-8 max-w-xl mx-auto">Join thousands of satisfied customers who trust Swift & On Time.</p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <Button size="lg" asChild className="bg-white text-blue-700 hover:bg-blue-50 hover:scale-105 transition-transform shadow-xl">
+                <Link href="/quote">Get Started <ArrowRight className="w-4 h-4 ml-1" /></Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild className="border-white/20 text-white hover:bg-white/10 bg-transparent">
+                <Link href="/contact">Contact Us</Link>
+              </Button>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>
