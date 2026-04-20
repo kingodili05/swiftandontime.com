@@ -1,481 +1,445 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 import {
-  Package,
-  MapPin,
-  Clock,
-  CheckCircle,
-  Truck,
   Search,
+  Package,
+  Truck,
+  MapPin,
+  CheckCircle2,
+  Clock,
+  XCircle,
+  RotateCcw,
+  Phone,
+  Mail,
+  Weight,
+  CalendarDays,
+  ArrowRight,
   AlertCircle,
-} from "lucide-react";
+  PackageOpen,
+} from "lucide-react"
+import type { Package as PackageType, PackageStatus, TrackingEvent } from "@/lib/types"
+import { STATUS_LABELS, STATUS_COLORS } from "@/lib/types"
+
+const STEPS: { key: PackageStatus; label: string; icon: React.ReactNode }[] = [
+  { key: "pending", label: "Registered", icon: <Package className="w-5 h-5" /> },
+  { key: "picked_up", label: "Picked Up", icon: <PackageOpen className="w-5 h-5" /> },
+  { key: "in_transit", label: "In Transit", icon: <Truck className="w-5 h-5" /> },
+  { key: "out_for_delivery", label: "Out for Delivery", icon: <MapPin className="w-5 h-5" /> },
+  { key: "delivered", label: "Delivered", icon: <CheckCircle2 className="w-5 h-5" /> },
+]
+
+const STEP_ORDER: PackageStatus[] = ["pending", "picked_up", "in_transit", "out_for_delivery", "delivered"]
+
+function getStepIndex(status: PackageStatus) {
+  if (status === "failed" || status === "returned") return -1
+  return STEP_ORDER.indexOf(status)
+}
+
+function StatusIcon({ status }: { status: PackageStatus }) {
+  const icons: Record<PackageStatus, React.ReactNode> = {
+    pending: <Clock className="w-6 h-6" />,
+    picked_up: <PackageOpen className="w-6 h-6" />,
+    in_transit: <Truck className="w-6 h-6" />,
+    out_for_delivery: <MapPin className="w-6 h-6" />,
+    delivered: <CheckCircle2 className="w-6 h-6" />,
+    failed: <XCircle className="w-6 h-6" />,
+    returned: <RotateCcw className="w-6 h-6" />,
+  }
+  return <>{icons[status]}</>
+}
+
+function SkeletonCard() {
+  return (
+    <div className="animate-pulse space-y-4">
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="h-6 bg-gray-200 rounded w-48" />
+          <div className="h-6 bg-gray-200 rounded w-24" />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="space-y-2">
+              <div className="h-3 bg-gray-200 rounded w-20" />
+              <div className="h-4 bg-gray-200 rounded w-32" />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-3">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="flex gap-4">
+            <div className="w-10 h-10 bg-gray-200 rounded-full shrink-0" />
+            <div className="flex-1 space-y-2 pt-1">
+              <div className="h-4 bg-gray-200 rounded w-40" />
+              <div className="h-3 bg-gray-200 rounded w-56" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function formatDate(dateStr: string | null) {
+  if (!dateStr) return null
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })
+}
+
+function formatDateTime(dateStr: string) {
+  return new Date(dateStr).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })
+}
 
 export default function TrackPage() {
-  const [trackingNumber, setTrackingNumber] = useState("");
-  const [trackingResult, setTrackingResult] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [trackingNumber, setTrackingNumber] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [pkg, setPkg] = useState<PackageType | null>(null)
+  const [error, setError] = useState("")
+  const [hasSearched, setHasSearched] = useState(false)
 
-  const handleTrack = async () => {
-    if (!trackingNumber.trim()) return;
+  async function handleTrack(e?: React.FormEvent) {
+    e?.preventDefault()
+    if (!trackingNumber.trim()) return
 
-    setIsLoading(true);
+    setLoading(true)
+    setError("")
+    setPkg(null)
+    setHasSearched(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      // Mock tracking data based on tracking number
-      const mockData = {
-        SOT123456789: {
-          status: "delivered",
-          packageInfo: {
-            trackingNumber: "SOT123456789",
-            service: "Same-Day Delivery",
-            weight: "2.5 kg",
-            dimensions: "30x20x15 cm",
-          },
-          sender: {
-            name: "TechStart Inc.",
-            address: "123 Business Ave, New York, NY",
-          },
-          recipient: {
-            name: "John Smith",
-            address: "456 Residential St, Brooklyn, NY",
-          },
-          timeline: [
-            {
-              status: "Package picked up",
-              location: "New York, NY",
-              time: "2024-01-15 09:30 AM",
-              completed: true,
-            },
-            {
-              status: "In transit to sorting facility",
-              location: "New York Distribution Center",
-              time: "2024-01-15 10:15 AM",
-              completed: true,
-            },
-            {
-              status: "Out for delivery",
-              location: "Brooklyn, NY",
-              time: "2024-01-15 02:30 PM",
-              completed: true,
-            },
-            {
-              status: "Delivered",
-              location: "456 Residential St, Brooklyn, NY",
-              time: "2024-01-15 04:45 PM",
-              completed: true,
-              note: "Delivered to recipient - Signature obtained",
-            },
-          ],
-        },
-
-        SOT987654321: {
-          status: "in-transit",
-          packageInfo: {
-            trackingNumber: "SOT987654321",
-            service: "International Express",
-            weight: "1.2 kg",
-            dimensions: "25x15x10 cm",
-          },
-          sender: {
-            name: "Global Exports Ltd.",
-            address: "London, UK",
-          },
-          recipient: {
-            name: "Maria Garcia",
-            address: "789 Main St, Los Angeles, CA",
-          },
-          timeline: [
-            {
-              status: "Package picked up",
-              location: "London, UK",
-              time: "2024-01-14 11:00 AM",
-              completed: true,
-            },
-            {
-              status: "Departed origin country",
-              location: "Heathrow Airport, London",
-              time: "2024-01-14 08:30 PM",
-              completed: true,
-            },
-            {
-              status: "In transit",
-              location: "JFK Airport, New York",
-              time: "2024-01-15 06:45 AM",
-              completed: true,
-            },
-            {
-              status: "Customs clearance",
-              location: "Los Angeles, CA",
-              time: "2024-01-15 02:15 PM",
-              completed: false,
-              current: true,
-            },
-            {
-              status: "Out for delivery",
-              location: "Los Angeles, CA",
-              time: "Estimated: 2024-01-16 10:00 AM",
-              completed: false,
-            },
-          ],
-        },
-
-        SOT047648845: {
-  status: "On Hold",
-  packageInfo: {
-    trackingNumber: "SOT047648845",
-    service: "International Express",
-    weight: "70.87 kg",
-    dimensions: "30x15x10 cm",
-  },
-  sender: {
-    name: "Ralphson Lucas",
-    address: "35 Abdallah Ebn El-Tahra St. off Ahmed Fakhry; Makkram Ebeid, Cairo, Egypt",
-  },
-  recipient: {
-    name: "Emma Mocasque",
-    address: "290 W Middle Verde Rd, Camp Verde, AZ 86322",
-    contact: "9282955890",
-  },
-  timeline: [
-    {
-      status: "Package picked up",
-      location: "Cairo, Egypt",
-      time: "2025-08-11 11:00 AM",
-      completed: true,
-    },
-    {
-      status: "Sorting Facility",
-      location: "Luxor International Airport",
-      time: "2025-08-11 08:30 PM",
-      completed: true,
-      note: "Processed and forwarded for export",
-    },
-    {
-      status: "Departed origin country",
-      location: "Luxor International Airport",
-      time: "2025-09-22 03:45 AM",
-      completed: true,
-    },
-    {
-      status: "Arrived at transit hub",
-      location: "Frankfurt, Germany",
-      time: "2025-09-25 12:20 PM",
-      completed: true,
-    },
-    {
-      status: "Custom Clearance",
-      location: "JFK Airport, New York, USA",
-      time: "2025-09-30 06:40 AM",
-      completed: false,
-      note: "Package currently with the United States Customs Department, Awaiting customs Clearance Fee of $11,300 release",
-    // },
-    // {
-    //   status: "Customs clearance",
-    //   location: "Phoenix, AZ, USA",
-    //   time: "2025-09-30 10:15 AM",
-    //   completed: false,
-    //   current: true,
-    //   note: "Awaiting customs Clearance Fee of $16,200 release",
-    // },
-    // {
-    //   status: "Out for delivery",
-    //   location: "Camp Verde, AZ",
-    //   time: "Estimated: 2025-08-15 09:00 AM",
-    //   completed: false,
-    },
-  ],
-},
-      }; // <-- CLOSE mockData object here
-
-      // Set the result using the trackingNumber key (or null if not found)
-      setTrackingResult(mockData[trackingNumber as keyof typeof mockData] || null);
-      setIsLoading(false);
-    }, 1500);
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "delivered":
-        return "bg-green-500";
-      case "On Hold":
-        return "bg-red-500";
-      case "in-transit":
-        return "bg-blue-500";
-      case "pending":
-        return "bg-yellow-500";
-      default:
-        return "bg-gray-500";
+    try {
+      const res = await fetch(`/api/track?number=${encodeURIComponent(trackingNumber.trim())}`)
+      if (!res.ok) {
+        setError("No package found with that tracking number. Please check and try again.")
+        return
+      }
+      const data = await res.json()
+      setPkg(data)
+    } catch {
+      setError("Something went wrong. Please try again.")
+    } finally {
+      setLoading(false)
     }
-  };
+  }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "delivered":
-        return <CheckCircle className="h-5 w-5" />;
-      case "in-transit":
-        return <Truck className="h-5 w-5" />;
-      case "pending":
-        return <Clock className="h-5 w-5" />;
-      default:
-        return <Package className="h-5 w-5" />;
-    }
-  };
+  const currentStepIndex = pkg ? getStepIndex(pkg.status) : -1
+  const isException = pkg?.status === "failed" || pkg?.status === "returned"
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-blue-800/50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Package className="h-10 w-10" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50">
+      {/* Hero search */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-900" />
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              Real-time package tracking
             </div>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6">
-              Track Your
-              <span className="text-orange-400"> Package</span>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in-up">
+              Track Your Package
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-              Enter your tracking number below to get real-time updates on your package location and delivery
-              status.
+            <p className="text-blue-100 text-lg mb-10 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+              Enter your tracking number to get real-time delivery updates
             </p>
 
-            {/* Tracking Form */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 max-w-2xl mx-auto">
-              <div className="flex gap-4">
+            <form
+              onSubmit={handleTrack}
+              className="flex gap-2 bg-white rounded-2xl p-2 shadow-2xl animate-fade-in-up"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <div className="flex-1 relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
-                  placeholder="Enter tracking number (e.g., SOT123456789)"
                   value={trackingNumber}
-                  onChange={(e) => setTrackingNumber(e.target.value)}
-                  className="bg-white text-black text-lg h-12"
-                  onKeyDown={(e: React.KeyboardEvent) => e.key === "Enter" && handleTrack()}
+                  onChange={(e) => setTrackingNumber(e.target.value.toUpperCase())}
+                  placeholder="e.g. SOT-ABC123-XY9Z"
+                  className="pl-12 h-12 border-0 bg-transparent text-gray-900 text-base focus-visible:ring-0 placeholder:text-gray-400"
                 />
-                <Button
-                  size="lg"
-                  className="bg-orange-500 hover:bg-orange-600 px-8"
-                  onClick={handleTrack}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                  ) : (
-                    <>
-                      <Search className="h-5 w-5 mr-2" />
-                      Track
-                    </>
-                  )}
-                </Button>
               </div>
-            </div>
+              <Button
+                type="submit"
+                size="lg"
+                disabled={loading || !trackingNumber.trim()}
+                className="bg-blue-600 hover:bg-blue-700 rounded-xl px-6 h-12 shrink-0 transition-all duration-200 hover:scale-105 active:scale-95"
+              >
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Tracking...
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    Track <ArrowRight className="w-4 h-4" />
+                  </div>
+                )}
+              </Button>
+            </form>
           </div>
         </div>
       </section>
 
-      {/* Tracking Results */}
-      {trackingResult && (
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              {/* Package Status Header */}
-              <Card className="mb-8">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <CardTitle className="text-2xl mb-2">
-                        Tracking #{trackingResult?.packageInfo?.trackingNumber}
-                      </CardTitle>
-                      <p className="text-gray-600">{trackingResult?.packageInfo?.service}</p>
-                    </div>
-                    <Badge className={`${getStatusColor(trackingResult?.status)} text-white px-4 py-2`}>
-                      <div className="flex items-center gap-2">
-                        {getStatusIcon(trackingResult?.status)}
-                        {trackingResult?.status === "delivered"
-                          ? "Delivered"
-                          : trackingResult?.status === "in-transit"
-                          ? "In Transit"
-                          : "Pending"}
-                      </div>
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div>
-                      <h4 className="font-semibold mb-2">From</h4>
-                      <p className="text-sm text-gray-600">{trackingResult?.sender?.name}</p>
-                      <p className="text-sm text-gray-600">{trackingResult?.sender?.address}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">To</h4>
-                      <p className="text-sm text-gray-600">{trackingResult?.recipient?.name}</p>
-                      <p className="text-sm text-gray-600">{trackingResult?.recipient?.address}</p>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-2">Package Details</h4>
-                      <p className="text-sm text-gray-600">Weight: {trackingResult?.packageInfo?.weight}</p>
-                      <p className="text-sm text-gray-600">Dimensions: {trackingResult?.packageInfo?.dimensions}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+      {/* Results */}
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
 
-              {/* Tracking Timeline */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Tracking History</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-6">
-                    {trackingResult?.timeline?.map((event: any, index: number) => (
-                      <div key={index} className="flex gap-4">
-                        <div className="flex flex-col items-center">
+          {loading && <SkeletonCard />}
+
+          {/* Error state */}
+          {!loading && error && (
+            <div className="animate-fade-in-up bg-white rounded-2xl p-8 shadow-sm border border-red-100 text-center">
+              <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertCircle className="w-8 h-8 text-red-500" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Package Not Found</h3>
+              <p className="text-gray-500">{error}</p>
+              <p className="text-sm text-gray-400 mt-2">
+                Example format: <span className="font-mono font-medium">SOT-ABC123-XY9Z</span>
+              </p>
+            </div>
+          )}
+
+          {/* Package result */}
+          {!loading && pkg && (
+            <div className="space-y-5">
+
+              {/* Status banner */}
+              <div className={`animate-fade-in-up rounded-2xl p-6 shadow-sm border ${
+                isException ? "bg-red-50 border-red-100" :
+                pkg.status === "delivered" ? "bg-green-50 border-green-100" :
+                "bg-blue-50 border-blue-100"
+              }`}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${
+                      isException ? "bg-red-100 text-red-600" :
+                      pkg.status === "delivered" ? "bg-green-100 text-green-600" :
+                      "bg-blue-100 text-blue-600"
+                    } ${pkg.status === "in_transit" ? "animate-pulse" : ""}`}>
+                      <StatusIcon status={pkg.status} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-500 font-medium">Tracking Number</p>
+                      <p className="text-xl font-bold text-gray-900 font-mono">{pkg.tracking_number}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <Badge className={`text-sm px-3 py-1 rounded-full font-semibold ${STATUS_COLORS[pkg.status]}`}>
+                      {STATUS_LABELS[pkg.status]}
+                    </Badge>
+                    {pkg.current_location && (
+                      <p className="text-sm text-gray-500 mt-1 flex items-center justify-end gap-1">
+                        <MapPin className="w-3 h-3" /> {pkg.current_location}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress stepper */}
+              {!isException && (
+                <div className="animate-fade-in-up bg-white rounded-2xl p-6 shadow-sm border border-gray-100" style={{ animationDelay: "0.05s" }}>
+                  <h3 className="font-semibold text-gray-900 mb-6">Delivery Progress</h3>
+                  <div className="relative">
+                    <div className="absolute top-5 left-5 right-5 h-0.5 bg-gray-200 hidden sm:block" />
+                    <div
+                      className="absolute top-5 left-5 h-0.5 bg-blue-500 hidden sm:block transition-all duration-1000 ease-out"
+                      style={{
+                        width: currentStepIndex >= 0
+                          ? `calc(${(currentStepIndex / (STEPS.length - 1)) * 100}% - 10px)`
+                          : "0%",
+                      }}
+                    />
+                    <div className="flex justify-between relative">
+                      {STEPS.map((step, index) => {
+                        const done = currentStepIndex > index
+                        const active = currentStepIndex === index
+                        return (
                           <div
-                            className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                              event.completed
-                                ? "bg-green-500 text-white"
-                                : event.current
-                                ? "bg-blue-500 text-white"
-                                : "bg-gray-300 text-gray-600"
-                            }`}
+                            key={step.key}
+                            className="flex flex-col items-center gap-2 animate-fade-in-up"
+                            style={{ animationDelay: `${0.1 + index * 0.08}s` }}
                           >
-                            {event.completed ? (
-                              <CheckCircle className="h-5 w-5" />
-                            ) : event.current ? (
-                              <Clock className="h-5 w-5" />
-                            ) : (
-                              <div className="w-3 h-3 rounded-full bg-current" />
-                            )}
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center z-10 transition-all duration-500 ${
+                              done ? "bg-blue-600 text-white shadow-md" :
+                              active ? "bg-blue-600 text-white shadow-lg ring-4 ring-blue-100 scale-110" :
+                              "bg-gray-100 text-gray-400"
+                            }`}>
+                              {done ? <CheckCircle2 className="w-5 h-5" /> : step.icon}
+                            </div>
+                            <p className={`text-xs font-medium text-center hidden sm:block ${
+                              active ? "text-blue-600" : done ? "text-gray-700" : "text-gray-400"
+                            }`}>
+                              {step.label}
+                            </p>
                           </div>
-                          {index < (trackingResult?.timeline?.length || 0) - 1 && (
-                            <div
-                              className={`w-0.5 h-12 mt-2 ${event.completed ? "bg-green-500" : "bg-gray-300"}`}
-                            />
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Info grid */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <InfoCard title="Delivery Info" icon={<CalendarDays className="w-4 h-4 text-blue-500" />} delay="0.15s">
+                  <InfoRow label="Service" value={pkg.service_type} />
+                  <InfoRow label="Origin" value={pkg.origin} />
+                  <InfoRow label="Destination" value={pkg.destination} />
+                  <InfoRow label="Est. Delivery" value={formatDate(pkg.estimated_delivery)} highlight />
+                  <InfoRow label="Delivered On" value={formatDate(pkg.actual_delivery)} highlight />
+                  <InfoRow label="Ship Date" value={formatDate(pkg.created_at)} />
+                </InfoCard>
+
+                <InfoCard title="Package Details" icon={<Weight className="w-4 h-4 text-blue-500" />} delay="0.2s">
+                  <InfoRow label="Type" value={pkg.package_type} />
+                  <InfoRow label="Weight" value={pkg.weight ? `${pkg.weight} lbs` : null} />
+                  <InfoRow label="Dimensions" value={pkg.dimensions} />
+                  <InfoRow label="Contents" value={pkg.description} />
+                </InfoCard>
+
+                <InfoCard title="Recipient" icon={<MapPin className="w-4 h-4 text-blue-500" />} delay="0.25s">
+                  <InfoRow label="Name" value={pkg.recipient_name} />
+                  <InfoRow
+                    label="Address"
+                    value={[pkg.recipient_address, pkg.recipient_city, pkg.recipient_state, pkg.recipient_zip, pkg.recipient_country]
+                      .filter(Boolean).join(", ")}
+                  />
+                  <InfoRow label="Phone" value={pkg.recipient_phone} icon={<Phone className="w-3 h-3" />} />
+                  <InfoRow label="Email" value={pkg.recipient_email} icon={<Mail className="w-3 h-3" />} />
+                </InfoCard>
+
+                {pkg.sender_name && (
+                  <InfoCard title="Sender" icon={<Package className="w-4 h-4 text-blue-500" />} delay="0.3s">
+                    <InfoRow label="Name" value={pkg.sender_name} />
+                    <InfoRow
+                      label="Address"
+                      value={[pkg.sender_address, pkg.sender_city, pkg.sender_country].filter(Boolean).join(", ")}
+                    />
+                    <InfoRow label="Phone" value={pkg.sender_phone} />
+                    <InfoRow label="Email" value={pkg.sender_email} />
+                  </InfoCard>
+                )}
+              </div>
+
+              {/* Tracking timeline */}
+              {pkg.tracking_events && pkg.tracking_events.length > 0 && (
+                <div className="animate-fade-in-up bg-white rounded-2xl p-6 shadow-sm border border-gray-100" style={{ animationDelay: "0.35s" }}>
+                  <h3 className="font-semibold text-gray-900 mb-6">Tracking History</h3>
+                  <div>
+                    {pkg.tracking_events.map((event: TrackingEvent, index: number) => (
+                      <div
+                        key={event.id}
+                        className="flex gap-4 animate-slide-in-left"
+                        style={{ animationDelay: `${0.4 + index * 0.06}s` }}
+                      >
+                        <div className="flex flex-col items-center">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 z-10 ${
+                            index === 0 ? "bg-blue-600 text-white shadow-md" : "bg-gray-100 text-gray-400"
+                          }`}>
+                            <Truck className="w-4 h-4" />
+                          </div>
+                          {index < (pkg.tracking_events?.length ?? 0) - 1 && (
+                            <div className="w-0.5 flex-1 bg-gray-100 my-1 min-h-[1.5rem]" />
                           )}
                         </div>
-                        <div className="flex-1 pb-8">
-                          <div className="flex items-center gap-2 mb-1">
-                            <h4 className="font-semibold">{event.status}</h4>
-                            {event.current && (
-                              <Badge variant="outline" className="text-blue-600 border-blue-600">
-                                Current
-                              </Badge>
-                            )}
+                        <div className="pb-5 flex-1">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1">
+                            <p className={`font-semibold ${index === 0 ? "text-blue-700" : "text-gray-800"}`}>
+                              {event.description}
+                            </p>
+                            <p className="text-xs text-gray-400 shrink-0">{formatDateTime(event.timestamp)}</p>
                           </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600 mb-1">
-                            <MapPin className="h-4 w-4" />
-                            <span>{event.location}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-sm text-gray-600">
-                            <Clock className="h-4 w-4" />
-                            <span>{event.time}</span>
-                          </div>
-                          {event.note && <p className="text-sm text-gray-600 mt-2 bg-gray-50 p-2 rounded">{event.note}</p>}
+                          {event.location && (
+                            <p className="text-sm text-gray-500 flex items-center gap-1 mt-0.5">
+                              <MapPin className="w-3 h-3" /> {event.location}
+                            </p>
+                          )}
                         </div>
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-      )}
+                </div>
+              )}
 
-      {/* No Results */}
-      {trackingNumber && trackingResult === null && !isLoading && (
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <Card>
-                <CardContent className="p-8">
-                  <AlertCircle className="h-16 w-16 text-yellow-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Tracking Number Not Found</h3>
-                  <p className="text-gray-600 mb-6">
-                    We couldn't find any information for tracking number "{trackingNumber}". Please check the number
-                    and try again.
-                  </p>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <p>• Make sure you've entered the complete tracking number</p>
-                    <p>• Tracking numbers are usually 10-12 characters long</p>
-                    <p>• It may take up to 24 hours for new shipments to appear in our system</p>
+              {pkg.notes && (
+                <div className="animate-fade-in-up bg-amber-50 border border-amber-100 rounded-2xl p-5" style={{ animationDelay: "0.45s" }}>
+                  <p className="text-sm font-semibold text-amber-800 mb-1">Note from courier</p>
+                  <p className="text-sm text-amber-700">{pkg.notes}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Default state */}
+          {!loading && !hasSearched && (
+            <div className="grid sm:grid-cols-3 gap-4 mt-4">
+              {[
+                { icon: <Clock className="w-6 h-6 text-blue-500" />, title: "Real-time Updates", desc: "Get instant status updates as your package moves" },
+                { icon: <MapPin className="w-6 h-6 text-blue-500" />, title: "Location Tracking", desc: "Know exactly where your package is at all times" },
+                { icon: <CheckCircle2 className="w-6 h-6 text-blue-500" />, title: "Delivery Confirmation", desc: "Receive confirmation once your package is delivered" },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center animate-fade-in-up"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    {item.icon}
                   </div>
-                </CardContent>
-              </Card>
+                  <h3 className="font-semibold text-gray-900 mb-1">{item.title}</h3>
+                  <p className="text-sm text-gray-500">{item.desc}</p>
+                </div>
+              ))}
             </div>
-          </div>
-        </section>
-      )}
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Tracking FAQ</h2>
-              <p className="text-gray-600">Common questions about package tracking</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-3">When will my tracking information appear?</h3>
-                  <p className="text-gray-600 text-sm">
-                    Tracking information typically appears within 2-4 hours of pickup. For international shipments, it
-                    may take up to 24 hours.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-3">Why hasn't my package moved?</h3>
-                  <p className="text-gray-600 text-sm">
-                    Packages may stay at facilities for sorting, customs clearance, or weather delays. Contact us if
-                    there's no update for 48+ hours.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-3">What if delivery fails?</h3>
-                  <p className="text-gray-600 text-sm">
-                    We'll attempt redelivery the next business day. You can also arrange pickup at our facility or
-                    request delivery to a different address.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-3">Can I change the delivery address?</h3>
-                  <p className="text-gray-600 text-sm">
-                    Address changes are possible before the package is out for delivery. Contact our customer service
-                    team as soon as possible.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="text-center mt-12">
-              <p className="text-gray-600 mb-4">Need more help with your shipment?</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild>
-                  <a href="tel:+15551234567">Call Support</a>
-                </Button>
-                <Button variant="outline" asChild>
-                  <a href="mailto:support@swiftandontime.com">Email Us</a>
-                </Button>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
     </div>
-  );
+  )
+}
+
+function InfoCard({ title, icon, delay, children }: { title: string; icon: React.ReactNode; delay: string; children: React.ReactNode }) {
+  return (
+    <div className="animate-fade-in-up bg-white rounded-2xl p-6 shadow-sm border border-gray-100" style={{ animationDelay: delay }}>
+      <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">{icon} {title}</h3>
+      <div className="space-y-3 text-sm">{children}</div>
+    </div>
+  )
+}
+
+function InfoRow({
+  label,
+  value,
+  highlight,
+  icon,
+}: {
+  label: string
+  value: string | number | null | undefined
+  highlight?: boolean
+  icon?: React.ReactNode
+}) {
+  if (!value) return null
+  return (
+    <div className="flex justify-between gap-4">
+      <span className="text-gray-400 shrink-0">{label}</span>
+      <span className={`text-right font-medium flex items-center gap-1 ${highlight ? "text-blue-600" : "text-gray-700"}`}>
+        {icon}{String(value)}
+      </span>
+    </div>
+  )
 }
