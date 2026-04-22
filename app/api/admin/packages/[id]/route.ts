@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 function isAuthenticated(request: NextRequest) {
   const adminAuth = request.cookies.get('admin_auth')
   const validToken = process.env.ADMIN_TOKEN ?? 'swift_admin_token'
