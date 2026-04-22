@@ -6,6 +6,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { WhatsAppFloat } from "@/components/whatsapp-float"
 import { TrackingFloat } from "@/components/tracking-float"
+import { TawkChat } from "@/components/tawk-chat"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -30,6 +31,7 @@ export default function RootLayout({
         <Footer />
         <WhatsAppFloat />
         <TrackingFloat />
+        <TawkChat />
       </body>
     </html>
   )
