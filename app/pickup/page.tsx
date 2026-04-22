@@ -100,6 +100,8 @@ export default function PickupPage() {
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState("")
+  const [confirmationNum, setConfirmationNum] = useState("")
   const [selectedAddress, setSelectedAddress] = useState<any>(null)
 
   // Sample saved addresses (in real app, this would come from user account)
@@ -198,12 +200,22 @@ export default function PickupPage() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
+    setSubmitError("")
+    try {
+      const res = await fetch("/api/pickup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pickupData),
+      })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error || "Failed to submit")
+      setConfirmationNum(json.confirmation)
       setIsSubmitted(true)
-    }, 2000)
+    } catch (err: any) {
+      setSubmitError(err.message || "Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const canSubmit = () => {
@@ -251,7 +263,7 @@ export default function PickupPage() {
                   <h3 className="font-semibold mb-4">Pickup Details</h3>
                   <div className="text-left space-y-2 text-sm">
                     <div>
-                      <strong>Confirmation #:</strong> SOT-PU-{Math.random().toString(36).substr(2, 9).toUpperCase()}
+                      <strong>Confirmation #:</strong> {confirmationNum}
                     </div>
                     <div>
                       <strong>Service:</strong> {serviceTypes.find((s) => s.value === pickupData.serviceType)?.label}
@@ -849,6 +861,9 @@ export default function PickupPage() {
                       <p className="text-sm text-gray-500 mt-2 text-center">
                         Please fill in all required fields to schedule your pickup
                       </p>
+                    )}
+                    {submitError && (
+                      <p className="text-sm text-red-600 mt-2 text-center">{submitError}</p>
                     )}
                   </CardContent>
                 </Card>
