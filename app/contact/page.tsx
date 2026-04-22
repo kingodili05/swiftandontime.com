@@ -35,20 +35,29 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", subject: "", message: "", inquiryType: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState("")
 
   const set = (field: string, value: string) => setFormData(prev => ({ ...prev, [field]: value }))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSubmitting(false)
+    setSubmitError("")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error || "Failed to send")
       setIsSubmitted(true)
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormData({ name: "", email: "", phone: "", company: "", subject: "", message: "", inquiryType: "" })
-      }, 4000)
-    }, 1500)
+      setFormData({ name: "", email: "", phone: "", company: "", subject: "", message: "", inquiryType: "" })
+    } catch (err: any) {
+      setSubmitError(err.message || "Something went wrong. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -164,6 +173,9 @@ export default function ContactPage() {
                           <span className="flex items-center gap-2"><Send className="w-4 h-4" /> Send Message <ArrowRight className="w-4 h-4" /></span>
                         )}
                       </Button>
+                      {submitError && (
+                        <p className="text-sm text-red-600 mt-3 text-center">{submitError}</p>
+                      )}
                     </form>
                   )}
                 </div>
