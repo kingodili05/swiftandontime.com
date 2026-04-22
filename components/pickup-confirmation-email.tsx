@@ -322,8 +322,8 @@ export function PickupConfirmationEmail({ pickup }: PickupConfirmationEmailProps
             <div>
               <strong style={{ color: "#374151" }}>Phone:</strong>
               <br />
-              <a href="tel:+15551234567" style={{ color: "#3b82f6", textDecoration: "none" }}>
-                +1 (555) 123-4567
+              <a href="tel:+18052627073" style={{ color: "#3b82f6", textDecoration: "none" }}>
+                +1 (805) 262-7073
               </a>
             </div>
             <div>
@@ -390,9 +390,9 @@ export function PickupConfirmationEmail({ pickup }: PickupConfirmationEmailProps
           <strong style={{ color: "#374151" }}>Swift & On Time Courier Services</strong>
           <br />
           <span style={{ color: "#6b7280", fontSize: "14px" }}>
-            123 Logistics Avenue, New York, NY 10001
+            120 E Promenade Way, Thousand Oaks, CA 91362
             <br />
-            Phone: +1 (555) 123-4567 | Email: info@swiftandontime.com
+            Phone: +1 (805) 262-7073 | Email: info@swiftandontime.com
           </span>
         </div>
 
@@ -433,7 +433,7 @@ export function PickupConfirmationEmailPreview() {
     contact: {
       name: "John Smith",
       company: "TechStart Inc.",
-      phone: "+1 (555) 123-4567",
+      phone: "+1 (805) 262-7073",
       email: "john@techstart.com",
     },
     address: {

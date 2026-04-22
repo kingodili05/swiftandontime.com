@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
 
       <p style="color:#6b7280;font-size:14px;line-height:1.7;margin:0 0 8px;">Need immediate help? You can also reach us at:</p>
       <p style="margin:0;font-size:14px;">
-        📞 <a href="tel:+15405946863" style="color:#2563eb;text-decoration:none;">+1 (540) 594-6863</a> &nbsp;|&nbsp;
+        📞 <a href="tel:+18052627073" style="color:#2563eb;text-decoration:none;">+1 (805) 262-7073</a> &nbsp;|&nbsp;
         💬 <a href="https://swiftandontime.com" style="color:#2563eb;text-decoration:none;">Live Chat on our website</a>
       </p>
     </div>

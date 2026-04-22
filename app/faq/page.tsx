@@ -58,7 +58,7 @@ const CATEGORIES = [
     key: "insurance", icon: <Shield className="w-4 h-4" />, label: "Insurance", color: "bg-purple-50 text-purple-600",
     faqs: [
       { q: "What insurance is included?", a: "All shipments include basic coverage up to $100 free. Additional coverage up to $50,000 is available at $1 per $100 declared value." },
-      { q: "How do I file a claim?", a: "File within 30 days of delivery by calling +1 (540) 594-6863 or emailing claims@swiftandontime.cc. Provide tracking number, damage photos, and proof of value. Claims resolved in 5–7 business days." },
+      { q: "How do I file a claim?", a: "File within 30 days of delivery by calling +1 (805) 262-7073 or emailing claims@swiftandontime.cc. Provide tracking number, damage photos, and proof of value. Claims resolved in 5–7 business days." },
       { q: "Can I cancel after pickup?", a: "Cancellations or modifications are possible before dispatch (typically 2–4 hours after pickup). Fee: $10 domestic, $25 international. Contact support immediately." },
       { q: "How is my data protected?", a: "We comply with all data protection laws. Personal info is used only for shipping and customer service. We never sell customer data to third parties." },
     ],
@@ -215,7 +215,7 @@ export default function FAQPage() {
             <p className="text-blue-100 text-lg mb-8 max-w-lg mx-auto">Our support team is available 24/7 — just reach out.</p>
             <div className="flex flex-wrap gap-3 justify-center">
               <Button size="lg" asChild className="bg-white text-blue-700 hover:bg-blue-50 hover:scale-105 transition-transform shadow-xl">
-                <a href="tel:+15405946863" className="flex items-center gap-2"><Phone className="w-4 h-4" /> Call now</a>
+                <a href="tel:+18052627073" className="flex items-center gap-2"><Phone className="w-4 h-4" /> Call now</a>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-white/20 text-white hover:bg-white/10 bg-transparent">
                 <Link href="/contact" className="flex items-center gap-2"><Mail className="w-4 h-4" /> Send a message <ChevronRight className="w-4 h-4" /></Link>

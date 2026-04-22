@@ -60,7 +60,7 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-gray-600 leading-relaxed">
                 <p>Swift & On Time was founded with a single mission: to deliver packages the way people actually need them delivered — fast, safe, and with complete transparency.</p>
-                <p>What started as a small local operation in New York City has grown into a nationwide network serving thousands of businesses and individuals every day.</p>
+                <p>What started as a small local operation in Thousand Oaks, California has grown into a nationwide network serving thousands of businesses and individuals every day.</p>
                 <p>We believe that every package carries something important — a business deal, a gift, a medical necessity. That's why we treat every shipment like it matters, because it does.</p>
               </div>
               <div className="grid grid-cols-2 gap-4 mt-8">

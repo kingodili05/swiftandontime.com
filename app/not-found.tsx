@@ -238,7 +238,7 @@ export default function NotFound() {
                   <h4 className="font-semibold mb-2">Call Us</h4>
                   <p className="text-blue-100 text-sm mb-3">24/7 phone support</p>
                   <Button asChild className="bg-orange-500 hover:bg-orange-600">
-                    <a href="tel:+15551234567">+1 (555) 123-4567</a>
+                    <a href="tel:+18052627073">+1 (805) 262-7073</a>
                   </Button>
                 </CardContent>
               </Card>

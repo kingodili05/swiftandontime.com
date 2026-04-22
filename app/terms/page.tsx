@@ -55,7 +55,7 @@ export default function TermsPage() {
                 <CardContent className="space-y-4">
                   <p>
                     <strong>"Company," "we," "us," or "our"</strong> refers to Swift & On Time Courier Services, a
-                    logistics company incorporated under the laws of New York.
+                    logistics company incorporated under the laws of California.
                   </p>
                   <p>
                     <strong>"Customer," "you," or "your"</strong> refers to any individual or entity using our courier
@@ -269,14 +269,14 @@ export default function TermsPage() {
                 <CardContent className="space-y-4">
                   <h4 className="font-semibold">9.1 Governing Law</h4>
                   <p>
-                    These terms are governed by the laws of the State of New York, without regard to conflict of law
-                    principles. Any disputes will be resolved in the courts of New York County, New York.
+                    These terms are governed by the laws of the State of California, without regard to conflict of law
+                    principles. Any disputes will be resolved in the courts of Ventura County, California.
                   </p>
 
                   <h4 className="font-semibold">9.2 Arbitration</h4>
                   <p>
                     For claims under $10,000, parties may elect binding arbitration through the American Arbitration
-                    Association. Arbitration proceedings will be conducted in New York, NY.
+                    Association. Arbitration proceedings will be conducted in Thousand Oaks, CA.
                   </p>
 
                   <h4 className="font-semibold">9.3 Time Limitations</h4>
@@ -318,9 +318,9 @@ export default function TermsPage() {
                     <br />
                     Swift & On Time Courier Services
                     <br />
-                    123 Logistics Avenue, New York, NY 10001
+                    120 E Promenade Way, Thousand Oaks, CA 91362
                     <br />
-                    Phone: +1 (555) 123-4567
+                    Phone: +1 (805) 262-7073
                     <br />
                     Email: legal@swiftandontime.com
                   </p>

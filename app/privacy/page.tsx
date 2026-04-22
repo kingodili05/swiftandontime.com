@@ -326,16 +326,16 @@ export default function PrivacyPage() {
                     <p>
                       Swift & On Time Courier Services
                       <br />
-                      123 Logistics Avenue
+                      120 E Promenade Way
                       <br />
-                      New York, NY 10001
+                      Thousand Oaks, CA 91362
                       <br />
                       United States
                     </p>
                     <p className="mt-2">
                       <strong>Email:</strong> privacy@swiftandontime.com
                       <br />
-                      <strong>Phone:</strong> +1 (555) 123-4567
+                      <strong>Phone:</strong> +1 (805) 262-7073
                     </p>
                   </div>
 
@@ -353,7 +353,7 @@ export default function PrivacyPage() {
                 <CardContent className="space-y-4">
                   <h4 className="font-semibold">10.1 Governing Law</h4>
                   <p>
-                    This privacy policy is governed by the laws of the State of New York and applicable federal laws of
+                    This privacy policy is governed by the laws of the State of California and applicable federal laws of
                     the United States.
                   </p>
 

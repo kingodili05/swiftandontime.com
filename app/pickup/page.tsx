@@ -113,7 +113,7 @@ export default function PickupPage() {
       company: "TechStart Inc.",
       address: "123 Business Ave, New York, NY 10001",
       contact: "John Smith",
-      phone: "+1 (555) 123-4567",
+      phone: "+1 (805) 262-7073",
     },
     {
       id: 2,
@@ -299,8 +299,8 @@ export default function PickupPage() {
 
                   <div className="text-sm text-gray-500">
                     Need to make changes? Call us at{" "}
-                    <a href="tel:+15551234567" className="text-blue-600 hover:underline">
-                      +1 (555) 123-4567
+                    <a href="tel:+18052627073" className="text-blue-600 hover:underline">
+                      +1 (805) 262-7073
                     </a>
                   </div>
                 </div>
@@ -632,7 +632,7 @@ export default function PickupPage() {
                         <Input
                           id="phone"
                           type="tel"
-                          placeholder="+1 (555) 123-4567"
+                          placeholder="+1 (805) 262-7073"
                           value={pickupData.phone}
                           onChange={(e) => updatePickupData("phone", e.target.value)}
                         />
@@ -941,7 +941,7 @@ export default function PickupPage() {
 
                     <div className="space-y-3">
                       <Button variant="outline" size="sm" className="w-full justify-start bg-transparent" asChild>
-                        <a href="tel:+15551234567">
+                        <a href="tel:+18052627073">
                           <Phone className="h-4 w-4 mr-2" />
                           Call Support
                         </a>

@@ -38,7 +38,7 @@ const jobListings = [
     id: 1,
     title: "Senior Logistics Coordinator",
     department: "Operations",
-    location: "New York, NY",
+    location: "Thousand Oaks, CA",
     type: "Full-time",
     salary: "$65,000 - $80,000",
     posted: "2 days ago",
@@ -89,7 +89,7 @@ const jobListings = [
     id: 4,
     title: "Software Engineer",
     department: "Technology",
-    location: "New York, NY",
+    location: "Thousand Oaks, CA",
     type: "Full-time",
     salary: "$90,000 - $120,000",
     posted: "5 days ago",
@@ -106,7 +106,7 @@ const jobListings = [
     id: 5,
     title: "Business Development Manager",
     department: "Sales",
-    location: "New York, NY",
+    location: "Thousand Oaks, CA",
     type: "Full-time",
     salary: "$70,000 - $90,000 + Commission",
     posted: "1 week ago",
@@ -664,7 +664,7 @@ export default function CareersClientPage() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" required />
+                      <Input id="phone" type="tel" placeholder="+1 (805) 262-7073" required />
                     </div>
                   </div>
 

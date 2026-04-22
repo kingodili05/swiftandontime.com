@@ -567,7 +567,7 @@ export default function BusinessSolutionsPage() {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" required />
+                      <Input id="phone" type="tel" placeholder="+1 (805) 262-7073" required />
                     </div>
                   </div>
 
@@ -644,8 +644,8 @@ export default function BusinessSolutionsPage() {
                 <Phone className="h-12 w-12 text-blue-600 mb-4" />
                 <h4 className="font-semibold text-gray-900 mb-2">Call Us</h4>
                 <p className="text-gray-600">Business Development</p>
-                <a href="tel:+15551234567" className="text-blue-600 font-semibold hover:underline">
-                  +1 (555) 123-4567
+                <a href="tel:+18052627073" className="text-blue-600 font-semibold hover:underline">
+                  +1 (805) 262-7073
                 </a>
               </div>
 
@@ -663,9 +663,9 @@ export default function BusinessSolutionsPage() {
                 <h4 className="font-semibold text-gray-900 mb-2">Visit Us</h4>
                 <p className="text-gray-600">Business Center</p>
                 <p className="text-gray-600">
-                  123 Logistics Avenue
+                  120 E Promenade Way
                   <br />
-                  New York, NY 10001
+                  Thousand Oaks, CA 91362
                 </p>
               </div>
             </div>

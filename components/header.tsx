@@ -37,8 +37,8 @@ export function Header() {
       <div className="bg-blue-950 text-white py-2 px-4 text-xs hidden md:block">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-6 text-blue-200">
-            <a href="tel:+15405946863" className="flex items-center gap-1.5 hover:text-white transition-colors">
-              <Phone className="h-3 w-3" /> +1 (540) 594-6863
+            <a href="tel:+18052627073" className="flex items-center gap-1.5 hover:text-white transition-colors">
+              <Phone className="h-3 w-3" /> +1 (805) 262-7073
             </a>
             <a href="mailto:support@swiftandontime.cc" className="flex items-center gap-1.5 hover:text-white transition-colors">
               <Mail className="h-3 w-3" /> support@swiftandontime.cc

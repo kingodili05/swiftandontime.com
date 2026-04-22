@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     </div>
 
     <div style="background:#f8fafc; padding:20px 40px; border-top:1px solid #e5e7eb; text-align:center;">
-      <p style="color:#9ca3af; font-size:12px; margin:0;">Swift &amp; On Time Courier Services &bull; support@swiftandontime.cc &bull; +1 (540) 594-6863</p>
+      <p style="color:#9ca3af; font-size:12px; margin:0;">Swift &amp; On Time Courier Services &bull; support@swiftandontime.cc &bull; +1 (805) 262-7073</p>
     </div>
   </div>
 </body>
@@ -131,7 +131,7 @@ export async function POST(req: NextRequest) {
         <p style="margin:4px 0;font-size:13px;color:#374151;"><strong>Address:</strong> ${streetAddress}, ${city}, ${state} ${zipCode}</p>
         <p style="margin:4px 0;font-size:13px;color:#374151;"><strong>Service:</strong> ${serviceType}</p>
       </div>
-      <p style="color:#6b7280;font-size:13px;">Need to make changes? Call us at <a href="tel:+15405946863" style="color:#2563eb;">+1 (540) 594-6863</a> or reply to this email.</p>
+      <p style="color:#6b7280;font-size:13px;">Need to make changes? Call us at <a href="tel:+18052627073" style="color:#2563eb;">+1 (805) 262-7073</a> or reply to this email.</p>
     </div>
     <div style="background:#f8fafc;padding:16px 40px;border-top:1px solid #e5e7eb;text-align:center;">
       <p style="color:#9ca3af;font-size:12px;margin:0;">Swift &amp; On Time Courier Services</p>

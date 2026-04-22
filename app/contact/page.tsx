@@ -25,9 +25,9 @@ function Reveal({ children, className = "", delay = 0 }: { children: React.React
 }
 
 const CHANNELS = [
-  { icon: <Phone className="w-5 h-5" />, color: "bg-blue-50 text-blue-600", title: "Call Us", value: "+1 (540) 594-6863", note: "24/7 support", href: "tel:+15405946863" },
+  { icon: <Phone className="w-5 h-5" />, color: "bg-blue-50 text-blue-600", title: "Call Us", value: "+1 (805) 262-7073", note: "24/7 support", href: "tel:+18052627073" },
   { icon: <Mail className="w-5 h-5" />, color: "bg-indigo-50 text-indigo-600", title: "Email", value: "support@swiftandontime.cc", note: "Reply within 2h", href: "mailto:support@swiftandontime.cc" },
-  { icon: <MapPin className="w-5 h-5" />, color: "bg-violet-50 text-violet-600", title: "Office", value: "123 Logistics Ave, NY", note: "Mon–Fri 8AM–6PM", href: "#" },
+  { icon: <MapPin className="w-5 h-5" />, color: "bg-violet-50 text-violet-600", title: "Office", value: "120 E Promenade Way, Thousand Oaks, CA", note: "Mon–Fri 8AM–6PM", href: "#" },
   { icon: <Clock className="w-5 h-5" />, color: "bg-pink-50 text-pink-600", title: "Hours", value: "Mon–Sat, 8AM–6PM", note: "Support 24/7", href: "#" },
 ]
 
@@ -235,8 +235,8 @@ export default function ContactPage() {
                   <h3 className="font-bold mb-2">Need urgent help?</h3>
                   <p className="text-blue-100 text-sm mb-4">Call our 24/7 emergency line for time-sensitive shipments.</p>
                   <Button asChild size="sm" className="bg-white text-blue-700 hover:bg-blue-50 w-full">
-                    <a href="tel:+15405946863" className="flex items-center justify-center gap-2">
-                      <Phone className="w-4 h-4" /> +1 (540) 594-6863
+                    <a href="tel:+18052627073" className="flex items-center justify-center gap-2">
+                      <Phone className="w-4 h-4" /> +1 (805) 262-7073
                     </a>
                   </Button>
                 </div>

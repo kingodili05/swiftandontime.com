@@ -56,11 +56,11 @@ export function Footer() {
               Your trusted partner for fast, reliable courier and logistics solutions. Delivering excellence across the nation and worldwide.
             </p>
             <div className="space-y-2 text-sm">
-              <a href="tel:+15405946863" className="flex items-center gap-2 hover:text-white transition-colors group">
+              <a href="tel:+18052627073" className="flex items-center gap-2 hover:text-white transition-colors group">
                 <div className="w-7 h-7 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-blue-600/20 transition-colors">
                   <Phone className="w-3.5 h-3.5" />
                 </div>
-                +1 (540) 594-6863
+                +1 (805) 262-7073
               </a>
               <a href="mailto:support@swiftandontime.cc" className="flex items-center gap-2 hover:text-white transition-colors group">
                 <div className="w-7 h-7 bg-white/5 rounded-lg flex items-center justify-center group-hover:bg-blue-600/20 transition-colors">
@@ -72,7 +72,7 @@ export function Footer() {
                 <div className="w-7 h-7 bg-white/5 rounded-lg flex items-center justify-center">
                   <MapPin className="w-3.5 h-3.5" />
                 </div>
-                123 Logistics Ave, New York, NY 10001
+                120 E Promenade Way, Thousand Oaks, CA 91362
               </div>
             </div>
             <div className="flex items-center gap-2">

@@ -431,16 +431,16 @@ export default function CookiesPage() {
                     <p>
                       <strong>Swift & On Time Courier Services</strong>
                       <br />
-                      123 Logistics Avenue
+                      120 E Promenade Way
                       <br />
-                      New York, NY 10001
+                      Thousand Oaks, CA 91362
                       <br />
                       United States
                     </p>
                     <p className="mt-2">
                       <strong>Email:</strong> privacy@swiftandontime.com
                       <br />
-                      <strong>Phone:</strong> +1 (555) 123-4567
+                      <strong>Phone:</strong> +1 (805) 262-7073
                     </p>
                   </div>
 

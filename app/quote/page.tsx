@@ -747,7 +747,7 @@ export default function QuotePage() {
                               <Input
                                 id="senderPhone"
                                 type="tel"
-                                placeholder="+1 (555) 123-4567"
+                                placeholder="+1 (805) 262-7073"
                                 value={quoteData.senderPhone}
                                 onChange={(e) => updateQuoteData("senderPhone", e.target.value)}
                               />
