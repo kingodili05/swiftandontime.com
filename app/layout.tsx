@@ -4,7 +4,6 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { WhatsAppFloat } from "@/components/whatsapp-float"
 import { TrackingFloat } from "@/components/tracking-float"
 import { TawkChat } from "@/components/tawk-chat"
 
@@ -29,7 +28,6 @@ export default function RootLayout({
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
-        <WhatsAppFloat />
         <TrackingFloat />
         <TawkChat />
       </body>
